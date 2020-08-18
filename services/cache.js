@@ -15,11 +15,11 @@ mongoose.Query.prototype.cache = function(options = {}) {
 
 mongoose.Query.prototype.exec = async function() {
 	if (!this.useCache) {
-		console.log('DO NOT USE CACHE');
+		// console.log('DO NOT USE CACHE');
 		return exec.apply(this, arguments);
 	}
 
-	console.log('USE CACHE');
+	// console.log('USE CACHE');
 	const key = JSON.stringify(Object.assign({}, this.getFilter(), { collection: this.mongooseCollection.name }));
 
 	// See if we have a value for 'key' in redis
@@ -27,7 +27,7 @@ mongoose.Query.prototype.exec = async function() {
 
 	// If we do, return that
 	if (cacheValue) {
-		console.log('Serve from redis', this.mongooseCollection.name);
+		// console.log('Serve from redis', this.mongooseCollection.name);
 		const value = JSON.parse(cacheValue);
 
 		// Check to see if value get from redis is Array or not
@@ -41,7 +41,7 @@ mongoose.Query.prototype.exec = async function() {
 		return doc;
 	}
 
-	console.log('Serve from mongodb', this.mongooseCollection.name);
+	// console.log('Serve from mongodb', this.mongooseCollection.name);
 	// Otherwise, issue the query and store the results in redis
 	const result = await exec.apply(this, arguments);
 
