@@ -28,6 +28,6 @@ test('clicking login start oauth flow', async () => {
 test('when login show logout button', async () => {
 	await page.login();
 
-	const text = await page.getContent('a[href="/auth/logout"]');
+	const text = await page.getContentsOf('a[href="/auth/logout"]');
 	expect(text).toBe('Logout');
 });

@@ -9,7 +9,7 @@ class CustomPage {
 
 	static async build() {
 		const browser = await puppeteer.launch({
-			headless: false
+			headless: true
 		});
 
 		const page = await browser.newPage();
@@ -33,11 +33,11 @@ class CustomPage {
 		// await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
 		// await page.goto('http://localhost:3000',  { waitUntil: [ 'domcontentloaded', 'networkidle0' ] });
 
-		await this.page.reload();
+		await this.page.goto('http://localhost:3000/blogs');
 		await this.page.waitFor('a[href="/auth/logout"]');
 	}
 
-	async getContent(selector) {
+	async getContentsOf(selector) {
 		return await this.page.$eval(selector, (el) => el.innerHTML);
 	}
 }
