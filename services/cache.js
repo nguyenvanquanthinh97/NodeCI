@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const redis = require('redis');
 const { promisify } = require('util');
+const keys = require('../config/keys');
 
-const redisUrl = 'redis://127.0.0.1:6379';
 const exec = mongoose.Query.prototype.exec;
-const client = redis.createClient(redisUrl, { password: process.env.REDIS_PASSWORD });
+const client = redis.createClient(keys.redisUrl, { password: process.env.REDIS_PASSWORD });
 client.hget = promisify(client.hget);
 
 mongoose.Query.prototype.cache = function(options = {}) {
